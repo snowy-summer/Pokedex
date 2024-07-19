@@ -6,16 +6,27 @@
 //
 
 import SwiftUI
+import Combine
+import Alamofire
 
 struct ContentView: View {
+    @State private var cancellable = Set<AnyCancellable>()
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
         }
         .padding()
+        .onAppear {
+//            NetworkManager().fetchData(PokedexDTO.self, router: .pokedex(start: 0, end: 10))
+//                .sink { error in
+//                    print(error)
+//                } receiveValue: { PokedexDTO in
+////                    dump(PokedexDTO)
+//                }.store(in: &cancellable)
+
+        }
     }
 }
 
