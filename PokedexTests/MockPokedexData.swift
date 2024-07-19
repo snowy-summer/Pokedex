@@ -22,11 +22,19 @@ struct MockPokedexData {
     
     func mockData() -> Data? {
         
-        var data: Data?
+        guard let path = Bundle.main.path(forResource: "PokedexMock", ofType: "json") else {
+            print("json 파일 로딩 오류")
+            return nil
+        }
         
-        if let path = Bundle.main.path(forResource: "pokedexMock", ofType: "json"),
-           let jsonString = try? String(contentsOfFile: path) {
-            data = jsonString.data(using: .utf8)
+        guard let jsonString = try? String(contentsOfFile: path) else {
+            print("string 추출 오류")
+            return nil
+        }
+         
+        guard let data = jsonString.data(using: .utf8) else {
+            print("string -> data변환 오류")
+            return nil
         }
         
         return data

@@ -19,12 +19,12 @@ struct ContentView: View {
         }
         .padding()
         .onAppear {
-            NetworkManager().fetchData(PokedexDTO.self, router: .pokedex(start: 0, end: 10))
-                .sink { error in
-                    print(error)
-                } receiveValue: { PokedexDTO in
-                    dump(PokedexDTO)
-                }.store(in: &cancellable)
+//            NetworkManager().fetchData(PokedexDTO.self, router: .pokedex(start: 0, end: 10))
+//                .sink { error in
+//                    print(error)
+//                } receiveValue: { PokedexDTO in
+////                    dump(PokedexDTO)
+//                }.store(in: &cancellable)
 
         }
     }
