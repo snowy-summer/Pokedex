@@ -13,10 +13,10 @@ struct PokemonDTO: Decodable {
     let heght: Int
     let weight: Int
     let sprites: [Sprite]
-    let types: [PokemonType]
+    let types: [PokemonTypeDTO]
 }
 
-struct PokemonType: Decodable {
+struct PokemonTypeDTO: Decodable {
     let slot: Int
     let type: [PokedexListNamedElementDTO]
 }
