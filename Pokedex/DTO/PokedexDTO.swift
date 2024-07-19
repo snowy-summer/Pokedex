@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PokedexDTO: Decodable {
+struct PokedexDTO: Decodable, Equatable {
     let count: Int
     let next: String?
     let previous: String?

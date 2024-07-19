@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PokedexListNamedElementDTO: Decodable {
+struct PokedexListNamedElementDTO: Decodable, Equatable {
     let name: String
     let url: String
 }
