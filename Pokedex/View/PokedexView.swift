@@ -17,8 +17,13 @@ struct PokedexView: View {
                 let columns = Array(repeating: gridItems, count: 2)
                 LazyVGrid(columns: columns, spacing: 16) {
                     
-                    ForEach(viewModel.pokemon) { pokemon in
-                        PokedexCell(pokemon: pokemon)
+                    ForEach(viewModel.pokemon.indices, id: \.self) { index in
+                        PokedexCell(pokemon: viewModel.pokemon[index])
+                            .onAppear {
+                                if index == viewModel.pokemon.count - 6 {
+                                    viewModel.pageUpdate()
+                                }
+                            }
                     }
                    
                 }

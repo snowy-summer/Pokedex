@@ -10,7 +10,7 @@ import Alamofire
 
 enum PokeAPIRouter: URLRequestConvertible {
     
-    case pokedex(start: Int, end: Int)
+    case pokedex(start: Int, pageCount: Int)
     case pokemon(dexNum: Int)
     
     var scheme: String {

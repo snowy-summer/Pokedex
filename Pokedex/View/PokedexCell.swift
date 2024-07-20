@@ -30,8 +30,7 @@ struct PokedexCell: View {
             }
             .background(viewModel.firstType?.color ?? .clear)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(color: viewModel.firstType?.color ?? .clear,
-                    radius: 6)
+            
         }
         .frame(height: 120)
     }
@@ -87,6 +86,5 @@ struct PokedexCell: View {
 }
 #Preview {
     PokedexView()
-    //    PokedexCell(pokemon: PokemonModel(id: 0, name: "이상해씨", type: .grass))
 }
 
