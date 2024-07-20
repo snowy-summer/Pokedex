@@ -43,7 +43,7 @@ struct PokedexCell: View {
     
     private func pokemonTypesAndImage(width: CGFloat) -> some View {
         HStack(alignment: .bottom, spacing: 4) {
-            pokemonDoubleType(width: width)
+            pokemonDoubleType(width: width * 0.15)
             Spacer()
             pokemonImage(width: width,
                          sprite: viewModel.imageString)
@@ -69,7 +69,7 @@ struct PokedexCell: View {
         Image(type.symbolName)
             .resizable()
             .scaledToFit()
-            .frame(width: width * 0.15, height: width * 0.15)
+            .frame(width: width, height: width)
             .padding(.bottom, 16)
     }
     
