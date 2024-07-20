@@ -5,9 +5,9 @@
 //  Created by 최승범 on 7/19/24.
 //
 
-import Foundation
+import SwiftUI
 
-enum PokemonType: Int, CaseIterable {
+enum PokemonType: String, CaseIterable {
     case normal
     case fight
     case fly
@@ -71,6 +71,29 @@ enum PokemonType: Int, CaseIterable {
         case .dragon: return "dragonSymbol"
         case .dark: return "darkSymbol"
         case .fairy: return "fairySymbol"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .normal: return .normal
+        case .fight: return .fight
+        case .fly: return .fly
+        case .poison: return .poison
+        case .ground: return .ground
+        case .rock: return .rock
+        case .bug: return .bug
+        case .ghost: return .ghost
+        case .metal: return .metal
+        case .fire: return .fire
+        case .water: return .water
+        case .grass: return .grass
+        case .electricity: return .electricity
+        case .esper: return .esper
+        case .ice: return .ice
+        case .dragon: return .dragon
+        case .dark: return .dark
+        case .fairy: return .fairy
         }
     }
 }

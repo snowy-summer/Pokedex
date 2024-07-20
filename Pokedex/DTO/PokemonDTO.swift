@@ -7,24 +7,43 @@
 
 import Foundation
 
-struct PokemonDTO: Decodable {
-    let id: Int
-    let name: String
-    let heght: Int
-    let weight: Int
-    let sprites: [Sprite]
-    let types: [PokemonTypeDTO]
+struct PokemonDTO: Decodable, Identifiable {
+    var id: Int = 0
+    var name: String = ""
+    var height: Int = 0
+    var weight: Int = 0
+    var types: [PokemonTypeDTO] = []
+    var sprites: Sprite = Sprite(frontDefault: "",
+                                 other: OtherImages(officialArtWork: OfficialArtWork(frontDefault: "")))
 }
 
 struct PokemonTypeDTO: Decodable {
     let slot: Int
-    let type: [PokedexListNamedElementDTO]
+    let type: PokedexListNamedElementDTO
 }
 
 struct Sprite: Decodable {
-    let front_default: String
-    let front_shiny: String
-    let front_female: String
-    let front_shiny_female: String
+    let frontDefault: String
+    let other: OtherImages
+    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+        case other
+    }
 }
 
+struct OtherImages: Decodable {
+    let officialArtWork: OfficialArtWork
+    
+    enum CodingKeys: String, CodingKey {
+        case officialArtWork = "official-artwork"
+    }
+}
+
+struct OfficialArtWork: Decodable {
+    let frontDefault: String
+    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+}
