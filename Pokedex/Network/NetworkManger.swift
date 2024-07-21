@@ -32,4 +32,27 @@ struct NetworkManager {
                 }
         }.eraseToAnyPublisher()
     }
+    
+    func fetchUrlData<T: Decodable>(_ object: T.Type,
+                                    url: String) -> AnyPublisher<T, Error> {
+    
+        return Future { promise in
+            
+            guard let url = URL(string: url) else {
+              return promise(.failure(NetworkError.invalidURL))
+            }
+            
+            session.request(url)
+                .validate(statusCode: 200..<300)
+                .responseDecodable(of: T.self) { response in
+                    switch response.result {
+                    case .success(let data):
+                        promise(.success(data))
+                    case .failure(let error):
+                        promise(.failure(error))
+                    }
+                }
+        }.eraseToAnyPublisher()
+        
+    }
 }

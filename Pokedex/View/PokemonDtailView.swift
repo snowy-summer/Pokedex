@@ -10,7 +10,7 @@ import Kingfisher
 
 struct PokemonDtailView: View {
     
-    private let viewModel: PokemonDetailViewModel
+    @ObservedObject private var viewModel: PokemonDetailViewModel
     
     init(pokemon: PokemonDTO) {
         self.viewModel = PokemonDetailViewModel(pokemon: pokemon)
@@ -55,7 +55,7 @@ struct PokemonDtailView: View {
 
 fileprivate struct PokemonInfoView: View {
     
-    private let viewModel: PokemonDetailViewModel
+    @ObservedObject private var viewModel: PokemonDetailViewModel
     
     init(viewModel: PokemonDetailViewModel) {
         self.viewModel = viewModel
@@ -153,7 +153,7 @@ fileprivate struct PokemonInfoView: View {
     
     private var abilityView: some View {
         VStack {
-            Text("\(viewModel.ability)")
+            Text(viewModel.ability.name)
                 .padding()
             Text("특성")
                 .font(.caption2)
@@ -205,6 +205,6 @@ fileprivate struct PokemonInfoView: View {
                                             PokemonStat(baseStat: 45, statName: PokemonStatName(name: "hp")),
                                                 ],
                                          abilities: [
-                                            PokemonAbility(ability: Ability(name: "신록"), isHidden: true)
+                                            PokemonAbility(ability: Ability(name: "신록", url: ""), isHidden: true)
                                          ]))
 }

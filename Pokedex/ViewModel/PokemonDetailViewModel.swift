@@ -6,17 +6,22 @@
 //
 
 import Foundation
+import Combine
 
-final class PokemonDetailViewModel {
+final class PokemonDetailViewModel: ObservableObject {
     
-    var name: String
+    private let networkManager = NetworkManager()
+    private var cancellable = Set<AnyCancellable>()
+    
+    let name: String
     var firstType: PokemonType?
     var secondType: PokemonType?
-    var imageString: String
+    let imageString: String
     
     private let weight: Double
     private let height: Double
-    var ability: String
+    @Published var ability: Ability = Ability(name: "",
+                                              url: "")
     
     var hp: Int = 0
     var attack: Int = 0
@@ -24,8 +29,6 @@ final class PokemonDetailViewModel {
     var specialAttack: Int = 0
     var specialDeffense: Int = 0
     var speed: Int = 0
-    
-    
     
     init(pokemon: PokemonDTO) {
         
@@ -44,7 +47,11 @@ final class PokemonDetailViewModel {
         weight = pokemon.weight / 10
         height = pokemon.height / 10
         
-        ability = pokemon.abilities.isEmpty ? "없음" : pokemon.abilities[0].ability.name
+        if !pokemon.abilities.isEmpty {
+            ability = pokemon.abilities[0].ability
+        }
+        
+        fetchAbility()
         
         if !pokemon.stats.isEmpty {
             hp = pokemon.stats[0].baseStat
@@ -56,12 +63,31 @@ final class PokemonDetailViewModel {
         }
     }
     
-    
     func pokemonWeight() -> String {
         return weight.formatedNoneZero() + " kg"
     }
     
     func pokemonHeight() -> String {
         return height.formatedNoneZero() + " m"
+    }
+    
+    func fetchAbility() {
+        if ability.name.isKorean { return }
+        networkManager.fetchUrlData(PokemonAbilityDTO.self,
+                                    url: ability.url)
+        .sink { completion in
+            if case let .failure(error) = completion {
+                print(error)
+            }
+        } receiveValue: { [weak self] value in
+            guard let self = self else { return }
+            let abilityName = value.names.first {
+                $0.language.name == "ko"
+            }
+            if let koreanName = abilityName {
+                ability = Ability(name: koreanName.name, url: ability.url)
+            }
+        }.store(in: &cancellable)
+
     }
 }

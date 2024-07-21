@@ -13,6 +13,7 @@ enum PokeAPIRouter: URLRequestConvertible {
     case pokedex(start: Int, pageCount: Int)
     case pokemonInfo(dexNum: Int)
     case pokemonSpecies(dexNum: Int)
+    case pokemonAbility(ablityNum: Int)
     
     var scheme: String {
         
@@ -38,6 +39,8 @@ enum PokeAPIRouter: URLRequestConvertible {
             
         case .pokemonSpecies(let num):
             return "/api/v2/pokemon-species/\(num)"
+        case .pokemonAbility(let num):
+            return "/api/v2/ability/\(num)"
         }
     }
     
