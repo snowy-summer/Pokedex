@@ -36,7 +36,8 @@ struct PokemonAbility: Decodable {
 }
 
 struct Ability: Decodable {
-    let name: String
+    var name: String
+    let url: String
 }
 
 struct PokemonStat: Decodable {

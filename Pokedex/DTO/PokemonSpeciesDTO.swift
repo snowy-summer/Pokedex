@@ -8,7 +8,7 @@
 import Foundation
 
 struct PokemonSpeciesDTO: Decodable {
-    let names: [LanguageName]
+    let names: [Name]
     let genera: [Genera]
     let flavorTextEntries: [FlavorText]
     
@@ -20,7 +20,7 @@ struct PokemonSpeciesDTO: Decodable {
 }
 
 // 국가별 포켓몬 이름
-struct LanguageName: Decodable {
+struct Name: Decodable {
     let language: Language
     let name: String
 }
@@ -36,12 +36,10 @@ struct Genera: Decodable {
 struct FlavorText: Decodable {
     let flavorText: String
     let language: Language
-    let version: [PokedexListNamedElementDTO]
     
     enum CodingKeys: String, CodingKey {
         case flavorText = "flavor_text"
         case language
-        case version
     }
 }
 

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PokedexView: View {
+    
     @ObservedObject private var viewModel = PokedexViewModel()
     private let gridItems = GridItem(.flexible(), spacing: 16)
     

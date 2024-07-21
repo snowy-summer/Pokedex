@@ -65,47 +65,34 @@ final class PokedexViewModel: ObservableObject {
                 dispatchGroup.leave()
             }
         }
-        
-        dispatchGroup.notify(queue: .main) {
-            print("모든 포켓몬 데이터 가지고 옴")
-        }
     }
     
     private func fetchPokemon(id: Int, completion: @escaping () -> Void) {
-        networkManager.fetchData(PokemonDTO.self,
+       let result = networkManager.fetchData(PokemonDTO.self,
                                  router: .pokemonInfo(dexNum: id))
+        .combineLatest( networkManager.fetchData(PokemonSpeciesDTO.self,
+                                                 router: .pokemonSpecies(dexNum: id)))
+        .map { pokemon, species in
+            let koreaName = species.names.first {
+                $0.language.name == "ko"
+            }
+            return(pokemon: pokemon, name: koreaName?.name)
+            
+        }
+        .eraseToAnyPublisher()
+        
+        result
         .sink { completion in
             if case let .failure(error) = completion {
                 print(error)
             }
             
-        } receiveValue: { pokemon in
+        } receiveValue: { (pokemon, name) in
             self.pokemons[id - 1] = pokemon
+            self.pokemons[id - 1].name = name ?? pokemon.name
             completion()
         }
         .store(in: &cancellable)
     }
-    
-    private func fetchPokemonKoreaName(id: Int, completion: @escaping () -> Void) {
-        networkManager.fetchData(PokemonSpeciesDTO.self,
-                                 router: .pokemonInfo(dexNum: id))
-        .sink { completion in
-            if case let .failure(error) = completion {
-                print(error)
-            }
-            
-        } receiveValue: { pokemon in
-            
-           
-            let pokemonNames = pokemon.names.filter {
-                $0.name == "ko"
-            }
-            if pokemonNames.isEmpty { return }
-            let pokemonName = pokemonNames[0].name
-            
-            self.pokemons[id - 1].name = pokemonName
-            completion()
-        }
-        .store(in: &cancellable)
-    }
+
 }
