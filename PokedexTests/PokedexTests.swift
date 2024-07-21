@@ -50,7 +50,7 @@ final class PokedexTests: XCTestCase {
         
         // Mock데이터 비교
         networkManager.fetchData(PokedexDTO.self,
-                                 router: .pokedex(start: 0, end: 2))
+                                 router: .pokedex(start: 0, pageCount: 2))
         .sink { completion in
             print ("completion: \(completion)")
         } receiveValue: { [weak self] data in
@@ -72,7 +72,7 @@ final class PokedexTests: XCTestCase {
         
         // 실행
         networkManager.fetchData(PokedexDTO.self,
-                                 router: .pokedex(start: 0, end: 2))
+                                 router: .pokedex(start: 0, pageCount: 2))
         .sink { completion in
             print ("completion: \(completion)")
         } receiveValue: { [weak self] data in
@@ -111,7 +111,7 @@ final class PokedexTests: XCTestCase {
         
         //실행
         networkManager.fetchData(PokedexDTO.self,
-                                 router: .pokedex(start: 0, end: 2))
+                                 router: .pokedex(start: 0, pageCount: 2))
         .sink { completion in
             switch completion {
             case .finished:

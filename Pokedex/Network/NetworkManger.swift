@@ -26,8 +26,8 @@ struct NetworkManager {
                     switch response.result {
                     case .success(let data):
                         promise(.success(data))
-                    case .failure(_ ):
-                        promise(.failure(NetworkError.invalidResponse))
+                    case .failure(let error):
+                        promise(.failure(error))
                     }
                 }
         }.eraseToAnyPublisher()

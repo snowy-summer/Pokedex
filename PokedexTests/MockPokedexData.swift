@@ -13,10 +13,8 @@ struct MockPokedexData {
                           next:  "https://pokeapi.co/api/v2/pokemon?offset=2&limit=2",
                           previous: nil,
                           results: [
-                            PokedexListNamedElementDTO(name: "bulbasaur",
-                                                       url: "https://pokeapi.co/api/v2/pokemon/1/"),
-                            PokedexListNamedElementDTO(name: "ivysaur",
-                                                       url: "https://pokeapi.co/api/v2/pokemon/2/")
+                            PokedexListNamedElementDTO(name: "bulbasaur"),
+                            PokedexListNamedElementDTO(name: "ivysaur")
                           ]
     )
     

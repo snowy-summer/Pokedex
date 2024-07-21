@@ -7,24 +7,74 @@
 
 import Foundation
 
-struct PokemonDTO: Decodable {
-    let id: Int
-    let name: String
-    let heght: Int
-    let weight: Int
-    let sprites: [Sprite]
-    let types: [PokemonTypeDTO]
+struct PokemonDTO: Decodable, Identifiable {
+    var id: Int = 0
+    var name: String = ""
+    var height: Double = 0.0
+    var weight: Double = 0.0
+    var types: [PokemonTypeDTO] = []
+    var sprites: Sprite = Sprite(frontDefault: "",
+                                 other: OtherImages(officialArtWork: OfficialArtWork(frontDefault: "")))
+    var stats: [PokemonStat] = []
+    var abilities: [PokemonAbility] = []
+
 }
 
 struct PokemonTypeDTO: Decodable {
     let slot: Int
-    let type: [PokedexListNamedElementDTO]
+    let type: PokedexListNamedElementDTO
+}
+
+struct PokemonAbility: Decodable {
+    let ability: Ability
+    let isHidden: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case ability
+        case isHidden = "is_hidden"
+    }
+}
+
+struct Ability: Decodable {
+    let name: String
+}
+
+struct PokemonStat: Decodable {
+    let baseStat: Int
+    let statName: PokemonStatName
+    
+    enum CodingKeys: String, CodingKey {
+        case baseStat = "base_stat"
+        case statName = "stat"
+    }
+}
+
+struct PokemonStatName: Decodable {
+    let name: String
 }
 
 struct Sprite: Decodable {
-    let front_default: String
-    let front_shiny: String
-    let front_female: String
-    let front_shiny_female: String
+    let frontDefault: String
+    let other: OtherImages
+    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+        case other
+    }
 }
 
+struct OtherImages: Decodable {
+    let officialArtWork: OfficialArtWork
+    
+    enum CodingKeys: String, CodingKey {
+        case officialArtWork = "official-artwork"
+    }
+}
+
+struct OfficialArtWork: Decodable {
+    let frontDefault: String
+    
+    enum CodingKeys: String, CodingKey {
+        case frontDefault = "front_default"
+    }
+}
