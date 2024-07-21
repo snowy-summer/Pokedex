@@ -12,7 +12,7 @@ final class PokedexViewModel: ObservableObject {
     
     private let networkManager = NetworkManager()
     private var pokedex: PokedexDTO?
-    @Published var pokemon = [PokemonDTO]()
+    @Published var pokemons = [PokemonDTO]()
     private var cancellable = Set<AnyCancellable>()
     
     @Published private var startIndex = 0
@@ -47,7 +47,7 @@ final class PokedexViewModel: ObservableObject {
         } receiveValue: {[weak self] dex in
             guard let self = self else { return }
             pokedex = dex
-            pokemon += [PokemonDTO](repeating: PokemonDTO(),
+            pokemons += [PokemonDTO](repeating: PokemonDTO(),
                                     count: dex.results.count)
             fetchPokemon(start: startIndex,
                          end: startIndex + dex.results.count)
@@ -73,14 +73,37 @@ final class PokedexViewModel: ObservableObject {
     
     private func fetchPokemon(id: Int, completion: @escaping () -> Void) {
         networkManager.fetchData(PokemonDTO.self,
-                                 router: .pokemon(dexNum: id))
+                                 router: .pokemonInfo(dexNum: id))
         .sink { completion in
             if case let .failure(error) = completion {
                 print(error)
             }
             
         } receiveValue: { pokemon in
-            self.pokemon[id - 1] = pokemon
+            self.pokemons[id - 1] = pokemon
+            completion()
+        }
+        .store(in: &cancellable)
+    }
+    
+    private func fetchPokemonKoreaName(id: Int, completion: @escaping () -> Void) {
+        networkManager.fetchData(PokemonSpeciesDTO.self,
+                                 router: .pokemonInfo(dexNum: id))
+        .sink { completion in
+            if case let .failure(error) = completion {
+                print(error)
+            }
+            
+        } receiveValue: { pokemon in
+            
+           
+            let pokemonNames = pokemon.names.filter {
+                $0.name == "ko"
+            }
+            if pokemonNames.isEmpty { return }
+            let pokemonName = pokemonNames[0].name
+            
+            self.pokemons[id - 1].name = pokemonName
             completion()
         }
         .store(in: &cancellable)

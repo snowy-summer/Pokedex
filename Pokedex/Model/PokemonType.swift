@@ -10,13 +10,13 @@ import SwiftUI
 enum PokemonType: String, CaseIterable {
     case normal
     case fighting
-    case fly
+    case flying
     case poison
     case ground
     case rock
     case bug
     case ghost
-    case metal
+    case steel
     case fire
     case water
     case grass
@@ -32,13 +32,13 @@ enum PokemonType: String, CaseIterable {
         switch self {
         case .normal: return "노말"
         case .fighting: return "격투"
-        case .fly: return "비행"
+        case .flying: return "비행"
         case .poison: return "독"
         case .ground: return "땅"
         case .rock: return "바위"
         case .bug: return "벌레"
         case .ghost: return "고스트"
-        case .metal: return "강철"
+        case .steel: return "강철"
         case .fire: return "불꽃"
         case .water: return "물"
         case .grass: return "풀"
@@ -55,13 +55,13 @@ enum PokemonType: String, CaseIterable {
         switch self {
         case .normal: return "normalSymbol"
         case .fighting: return "fightingSymbol"
-        case .fly: return "flySymbol"
+        case .flying: return "flySymbol"
         case .poison: return "poisonSymbol"
         case .ground: return "groundSymbol"
         case .rock: return "rockSymbol"
         case .bug: return "bugSymbol"
         case .ghost: return "ghostSymbol"
-        case .metal: return "metalSymbol"
+        case .steel: return "metalSymbol"
         case .fire: return "fireSymbol"
         case .water: return "waterSymbol"
         case .grass: return "grassSymbol"
@@ -78,13 +78,13 @@ enum PokemonType: String, CaseIterable {
         switch self {
         case .normal: return .normal
         case .fighting: return .fighting
-        case .fly: return .fly
+        case .flying: return .fly
         case .poison: return .poison
         case .ground: return .ground
         case .rock: return .rock
         case .bug: return .bug
         case .ghost: return .ghost
-        case .metal: return .metal
+        case .steel: return .metal
         case .fire: return .fire
         case .water: return .water
         case .grass: return .grass

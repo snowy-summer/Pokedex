@@ -10,16 +10,47 @@ import Foundation
 struct PokemonDTO: Decodable, Identifiable {
     var id: Int = 0
     var name: String = ""
-    var height: Int = 0
-    var weight: Int = 0
+    var height: Double = 0.0
+    var weight: Double = 0.0
     var types: [PokemonTypeDTO] = []
     var sprites: Sprite = Sprite(frontDefault: "",
                                  other: OtherImages(officialArtWork: OfficialArtWork(frontDefault: "")))
+    var stats: [PokemonStat] = []
+    var abilities: [PokemonAbility] = []
+
 }
 
 struct PokemonTypeDTO: Decodable {
     let slot: Int
     let type: PokedexListNamedElementDTO
+}
+
+struct PokemonAbility: Decodable {
+    let ability: Ability
+    let isHidden: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case ability
+        case isHidden = "is_hidden"
+    }
+}
+
+struct Ability: Decodable {
+    let name: String
+}
+
+struct PokemonStat: Decodable {
+    let baseStat: Int
+    let statName: PokemonStatName
+    
+    enum CodingKeys: String, CodingKey {
+        case baseStat = "base_stat"
+        case statName = "stat"
+    }
+}
+
+struct PokemonStatName: Decodable {
+    let name: String
 }
 
 struct Sprite: Decodable {

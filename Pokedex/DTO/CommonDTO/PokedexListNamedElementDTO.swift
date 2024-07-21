@@ -9,5 +9,4 @@ import Foundation
 
 struct PokedexListNamedElementDTO: Decodable, Equatable {
     let name: String
-    let url: String
 }

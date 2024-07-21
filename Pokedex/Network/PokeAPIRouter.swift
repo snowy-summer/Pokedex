@@ -11,7 +11,8 @@ import Alamofire
 enum PokeAPIRouter: URLRequestConvertible {
     
     case pokedex(start: Int, pageCount: Int)
-    case pokemon(dexNum: Int)
+    case pokemonInfo(dexNum: Int)
+    case pokemonSpecies(dexNum: Int)
     
     var scheme: String {
         
@@ -32,8 +33,11 @@ enum PokeAPIRouter: URLRequestConvertible {
         case .pokedex:
             return "/api/v2/pokemon"
             
-        case .pokemon(let num):
+        case .pokemonInfo(let num):
             return "/api/v2/pokemon/\(num)"
+            
+        case .pokemonSpecies(let num):
+            return "/api/v2/pokemon-species/\(num)"
         }
     }
     
